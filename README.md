@@ -1,73 +1,169 @@
-# Nova AI — Full Stack Gemini Chatbot
+<div align="center">
 
-A production-ready AI chatbot built with React + TypeScript + Vite + Tailwind on the
-frontend, and Node.js + Express + MongoDB + Google Gemini API on the backend.
+# 🤖 Nova AI
 
-## Features implemented
+### Production-Ready AI Assistant Platform powered by Google Gemini
 
-- JWT auth: register, login, refresh, logout, forgot/reset password, email verification
-- Real-time streaming AI responses via Server-Sent Events (SSE)
-- Full chat management: create, rename, pin, archive, delete, search, export, import
-- Message actions: copy, regenerate, edit-and-resend, stop generation
-- Markdown rendering with GFM tables + syntax-highlighted code blocks
-- Auto chat-title generation from the first message
-- Dark mode / light mode with persisted preference
-- Responsive, animated UI (Framer Motion), collapsible sidebar
-- Rate limiting, Helmet, CORS allow-list, hashed refresh tokens, input validation (Zod)
-- Swappable AI provider layer — Gemini is wired up; add OpenAI/Claude/etc. by
-  implementing the `AIProvider` interface in `backend/src/services/gemini.service.ts`
-  and registering it in the `providers` map there.
+<p>
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white"/>
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express"/>
+  <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Google-Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white"/>
+</p>
 
-## Quick start (local, no Docker)
+<p>
+  <img src="https://img.shields.io/badge/Status-Active%20Development-success?style=flat-square"/>
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square"/>
+  <img src="https://img.shields.io/badge/PRs-Welcome-brightgreen?style=flat-square"/>
+</p>
 
-### 1. Backend
+</div>
+
+---
+
+## 📖 Overview
+
+Nova AI is a modern full-stack AI assistant that combines **Google Gemini**, **React**, **TypeScript**, **Node.js**, and **MongoDB** to deliver secure, responsive, and intelligent conversations.
+
+The project focuses on clean architecture, modular backend design, and production-oriented development. It includes secure authentication, streaming AI responses, persistent chat history, markdown rendering, and a responsive interface built for future extensibility.
+
+---
+
+## 📸 Application Preview
+
+| Login | AI Chat |
+|-------|---------|
+| ![](docs/screenshots/login.png) | ![](docs/screenshots/chat.png) |
+
+| Dark Mode | Mobile View |
+|------------|-------------|
+| ![](docs/screenshots/dark.png) | ![](docs/screenshots/mobile.png) |
+
+> Replace these placeholders with real screenshots from your application.
+
+---
+
+## ✨ Features
+
+### 🔐 Authentication
+- User Registration & Login
+- JWT Authentication
+- Refresh Tokens
+- Email Verification
+- Password Reset
+
+### 🤖 AI Assistant
+- Google Gemini Integration
+- Real-time Streaming (SSE)
+- Regenerate Responses
+- Edit & Resend
+- Stop Generation
+
+### 💬 Chat Management
+- Create & Rename Chats
+- Pin & Archive
+- Delete Conversations
+- Search Chats
+- Export & Import
+
+### 🎨 User Experience
+- Responsive Design
+- Dark / Light Theme
+- Framer Motion Animations
+- Markdown & Code Highlighting
+
+### 🛡 Security
+- Helmet
+- Rate Limiting
+- CORS Protection
+- Zod Validation
+- Secure Refresh Tokens
+
+---
+
+## 🏗 System Architecture
+
+```text
+                React + TypeScript
+                        │
+                        ▼
+               Express REST API
+                        │
+          ┌─────────────┴─────────────┐
+          ▼                           ▼
+     Google Gemini              MongoDB
+```
+
+---
+
+## 🛠 Tech Stack
+
+| Category | Technologies |
+|----------|--------------|
+| Frontend | React, TypeScript, Vite, Tailwind CSS |
+| Backend | Node.js, Express.js |
+| Database | MongoDB, Mongoose |
+| Authentication | JWT, Refresh Tokens |
+| AI | Google Gemini API |
+| DevOps | Docker |
+
+---
+
+## 🚀 Getting Started
 
 ```bash
+git clone <repository-url>
+
 cd backend
 cp .env.example .env
-# edit .env: set MONGO_URI, JWT secrets, and GEMINI_API_KEY
 npm install
 npm run dev
-```
 
-Get a free Gemini API key at https://aistudio.google.com/app/apikey
-
-### 2. Frontend
-
-```bash
-cd frontend
+cd ../frontend
 cp .env.example .env
 npm install
 npm run dev
 ```
 
-Visit http://localhost:5173 — register an account and start chatting.
+Add your **Gemini API Key** and MongoDB connection string to the backend `.env` file before starting the application.
 
-## Quick start (Docker)
+---
 
-```bash
-cd backend && cp .env.example .env   # fill in real secrets/API key
-cd ..
-docker compose up --build
+## 📁 Project Structure
+
+```text
+Nova-AI/
+├── backend/
+├── frontend/
+├── docs/
+├── docker-compose.yml
+└── README.md
 ```
 
-- Frontend: http://localhost:5173
-- Backend:  http://localhost:5000/api/health
+---
 
-## Project structure
+## 🚧 Roadmap
 
-```
-ai-chatbot/
-├── backend/    Express + TS API (auth, chats, messages, Gemini streaming)
-├── frontend/   React + TS + Vite + Tailwind chat UI
-└── docker-compose.yml
-```
+- [x] Secure Authentication
+- [x] Streaming AI Responses
+- [x] Chat Management
+- [x] Markdown Support
+- [x] Docker Support
+- [ ] Multiple AI Providers
+- [ ] Voice Conversations
+- [ ] File Upload Support
+- [ ] AI Agent Workflows
 
-## Notes
+---
 
-- Refresh tokens are httpOnly cookies (not accessible to JS); access tokens live in
-  memory on the client and are silently refreshed on 401.
-- `MailerService` currently logs verification/reset links to the console instead of
-  sending real email — wire up a transport (nodemailer/SES/SendGrid) for production use.
-- Both the backend (`npx tsc --noEmit`) and frontend (`npx tsc -b` + `vite build`)
-  have been verified to compile cleanly in this environment.
+## 🤝 Contributing
+
+Contributions, bug reports, and feature requests are welcome. Feel free to open an issue or submit a pull request.
+
+---
+
+## 📄 License
+
+Licensed under the **MIT License**.
